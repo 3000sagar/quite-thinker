@@ -106,8 +106,8 @@ SCRIPT_VARIANT_LANGUAGES = ["en", "hi"]
 
 # ─── Ollama Generation ───────────────────────────────────────────────────────
 OLLAMA_BASE_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3:latest"
-OLLAMA_TIMEOUT_SEC = 10
+OLLAMA_MODEL = "gemma4:latest"
+OLLAMA_TIMEOUT_SEC = 120
 OLLAMA_TEMPERATURE = 0.6
 
 # ─── Scheduler Settings ──────────────────────────────────────────────────────
@@ -130,16 +130,17 @@ DELETE_VIDEO_AFTER_SUCCESS_UPLOAD = True
 DELETE_VIDEO_ON_QA_REJECT = True
 
 # ─── Instagram Graph API (Optional) ─────────────────────────────────────────
-# Requires an Instagram Professional account connected to a Facebook Page,
-# with a long-lived access token and a PUBLIC video URL.
-ENABLE_INSTAGRAM_UPLOAD = False
-IG_USER_ID = ""                  # numeric Instagram Business/Creator User ID
-IG_ACCESS_TOKEN = ""             # long-lived Graph API token
+# Requires an Instagram Professional account connected to a Facebook Page.
+# Secrets stored in config_secrets.py (gitignored).
+ENABLE_INSTAGRAM_UPLOAD = True  # Set False to disable
 IG_API_VERSION = "v23.0"
-IG_VIDEO_URL_TEMPLATE = ""       # e.g. "https://cdn.example.com/reels/{filename}"
 IG_SHARE_TO_FEED = True
 IG_PUBLISH_POLL_INTERVAL_SEC = 5
 IG_PUBLISH_TIMEOUT_SEC = 180
+
+# ─── Cloudflare R2 (Optional – required for Instagram) ───────────────────────
+# Secrets stored in config_secrets.py (gitignored).
+ENABLE_R2_UPLOAD = True
 
 # ─── Analytics Pull ──────────────────────────────────────────────────────────
 ANALYTICS_FETCH_HOURS_AFTER = 24     # fetch stats this many hours post-upload

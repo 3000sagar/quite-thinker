@@ -3,8 +3,11 @@ core/instagram_uploader.py - Instagram Reels publishing via Meta Graph API.
 
 Notes:
   - Requires Instagram Professional account + connected Facebook Page.
-  - Graph API reel publishing requires a PUBLIC video URL.
+  - Graph API reel publishing requires a PUBLIC video URL — uses Cloudflare R2.
   - This module intentionally uses stdlib urllib (no extra dependency).
+
+R2 Setup:
+    Fill in config_secrets.py with your Cloudflare R2 credentials.
 """
 
 from __future__ import annotations
@@ -15,17 +18,14 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from config import (
     ENABLE_INSTAGRAM_UPLOAD,
-    IG_USER_ID,
-    IG_ACCESS_TOKEN,
     IG_API_VERSION,
-    IG_VIDEO_URL_TEMPLATE,
     IG_SHARE_TO_FEED,
     IG_PUBLISH_POLL_INTERVAL_SEC,
     IG_PUBLISH_TIMEOUT_SEC,
@@ -34,6 +34,13 @@ from core.database import execute_write
 from core.metadata_engine import Metadata
 
 logger = logging.getLogger(__name__)
+
+# ─── Secrets (gitignored) ───────────────────────────────────────────────────────
+try:
+    from config_secrets import IG_USER_ID, IG_ACCESS_TOKEN
+except ImportError:
+    IG_USER_ID = ""
+    IG_ACCESS_TOKEN = ""
 
 
 class InstagramUploadError(Exception):
@@ -51,7 +58,6 @@ class InstagramUploader:
             self.enabled
             and bool(str(IG_USER_ID).strip())
             and bool(str(IG_ACCESS_TOKEN).strip())
-            and bool(str(IG_VIDEO_URL_TEMPLATE).strip())
         )
 
     def upload(self, video_path: Path, metadata: Metadata, video_db_id: int) -> dict[str, Any]:
@@ -93,16 +99,11 @@ class InstagramUploader:
         }
 
     def _resolve_video_url(self, video_path: Path) -> str:
-        tpl = str(IG_VIDEO_URL_TEMPLATE or "").strip()
-        filename = video_path.name
-        stem = video_path.stem
-        ext = video_path.suffix.lstrip(".")
-        url = tpl.format(filename=filename, stem=stem, ext=ext)
-        if not str(url).startswith(("http://", "https://")):
-            raise InstagramUploadError(
-                "IG_VIDEO_URL_TEMPLATE must resolve to a public http(s) URL."
-            )
-        return str(url)
+        from core.r2_uploader import R2Uploader
+        r2 = R2Uploader()
+        public_url = r2.upload(video_path)
+        logger.info("Instagram: video public URL = %s", public_url)
+        return public_url
 
     def _build_caption(self, metadata: Metadata) -> str:
         tags = [str(t).strip() for t in (metadata.tags or []) if str(t).strip()]

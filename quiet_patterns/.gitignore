@@ -17,6 +17,7 @@ assets/music/
 # Secrets and auth
 client_secrets.json
 tokens/
+config_secrets.py
 *.pem
 *.key
 *.p12
