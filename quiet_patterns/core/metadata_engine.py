@@ -102,7 +102,7 @@ class MetadataEngine:
             candidate = tpl.format(
                 trigger=trigger or "everything",
                 identity=identity or "some people"
-            ).lower().strip()
+            ).strip()
             if len(candidate) <= self.MAX_TITLE_LENGTH:
                 return candidate
         # Fallback: truncate
@@ -111,7 +111,7 @@ class MetadataEngine:
     def _build_description(self, script: Script) -> str:
         topic = random.choice(_TOPIC_FILLERS)
         tpl   = random.choice(_DESCRIPTION_TEMPLATES)
-        return tpl.format(topic=topic).lower().strip()
+        return tpl.format(topic=topic).strip()
 
     def _build_tags(self) -> list[str]:
         dynamic = random.sample(_DYNAMIC_TAG_POOL, 3)

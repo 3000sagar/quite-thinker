@@ -464,9 +464,9 @@ class ScriptEngine:
         reasons = reasons or []
         score_hint = score_hint or {}
 
-        hook = script.hook.strip().lower()
-        body = script.body.strip().lower()
-        closing = script.closing.strip().lower()
+        hook = script.hook.strip()
+        body = script.body.strip()
+        closing = script.closing.strip()
 
         low_emotion = float(score_hint.get("emotional_score", 100.0)) < 45.0
         low_identity = float(score_hint.get("identity_score", 100.0)) < 50.0
@@ -525,8 +525,8 @@ class ScriptEngine:
                 trigger=random.choice(EMOTIONAL_TRIGGERS),
                 identity=random.choice(IDENTITY_PHRASES),
                 curiosity=random.choice(CURIOSITY_GAPS),
-            ).strip().lower()
-            closing_variant = random.choice(LOOP_CLOSINGS).strip().lower()
+            ).strip()
+            closing_variant = random.choice(LOOP_CLOSINGS).strip()
             candidate = Script(hook=hook_variant, body=script.body, closing=closing_variant)
             candidate = self._trim_script_to_bounds(candidate)
 
@@ -684,10 +684,9 @@ class ScriptEngine:
         if arm in EXPERIMENT_ARM_TRANSFORMS:
             hook, body, closing = self._apply_experiment_arm(hook, body, closing, arm)
 
-        # Lowercase everything
-        hook    = hook.strip().lower()
-        body    = body.strip().lower()
-        closing = closing.strip().lower()
+        hook    = hook.strip()
+        body    = body.strip()
+        closing = closing.strip()
 
         self._body_usage[body_idx] += 1
         self._recent_body_idxs.append(body_idx)
@@ -926,9 +925,9 @@ class ScriptEngine:
         Nudge Ollama output to satisfy scorer signals so retries converge quickly.
         Keeps text in script length bounds.
         """
-        hook = script.hook.strip().lower()
-        body = script.body.strip().lower()
-        closing = script.closing.strip().lower()
+        hook = script.hook.strip()
+        body = script.body.strip()
+        closing = script.closing.strip()
         full = f"{hook}\n{body}\n{closing}"
 
         # Ensure identity phrase appears (identity_score).
