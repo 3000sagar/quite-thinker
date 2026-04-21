@@ -27,6 +27,7 @@ from config import (
     LOG_LEVEL,
     LOG_FORMAT,
     LOG_FILE,
+    OUTPUT_DIR,
     PIPELINE_MAX_SCRIPT_ATTEMPTS,
     PIPELINE_MAX_VIDEO_QA_REJECT_RETRIES,
     PIPELINE_REPORTS_ENABLED,
@@ -63,6 +64,7 @@ from core.instagram_uploader import InstagramUploader, InstagramUploadError
 from core.scheduler      import SmartScheduler
 from core.analytics      import AnalyticsEngine
 from core.report_dashboard import build_reports_dashboard
+from core.thumbnail_engine import generate_thumbnail
 
 
 # ─── Pipeline ────────────────────────────────────────────────────────────────
@@ -372,6 +374,15 @@ async def run_pipeline(dry_run: bool = False) -> None:
                 yt_id = uploader.upload(video_path, metadata, video_id)
                 logger.info("Successfully uploaded: https://youtube.com/shorts/%s", yt_id)
                 youtube_status = "uploaded"
+
+                # Generate and upload custom thumbnail
+                try:
+                    thumb_path = OUTPUT_DIR / f"thumb_{yt_id}.jpg"
+                    generate_thumbnail(script.hook, thumb_path)
+                    uploader.upload_thumbnail(yt_id, thumb_path)
+                    logger.info("Thumbnail set for video %s", yt_id)
+                except Exception as exc:
+                    logger.warning("Thumbnail upload skipped/failed: %s", exc)
             except QuotaExceededError as exc:
                 logger.warning("YouTube upload skipped — quota exceeded: %s", exc)
                 youtube_status = "quota_exceeded"

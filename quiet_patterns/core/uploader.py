@@ -200,6 +200,27 @@ class Uploader:
 
         raise RuntimeError(f"All {self.MAX_RETRIES} upload attempts failed.") from last_exc
 
+    # ── Thumbnail ─────────────────────────────────────────────────────────────
+
+    def upload_thumbnail(self, video_id: str, thumbnail_path: Path) -> None:
+        """
+        Upload a custom thumbnail image for a video.
+
+        NOTE: Your YouTube account must be verified (phone-verified) before
+        custom thumbnails can be uploaded. Check YouTube Studio →
+        Customization → Custom thumbnails. If the call fails silently, the
+        account likely isn't verified yet.
+        """
+        self._check_service()
+        try:
+            self._service.thumbnails().set(
+                videoId=video_id,
+                media_body=MediaFileUpload(str(thumbnail_path), mimetype="image/jpeg"),
+            ).execute()
+            logger.info("Thumbnail uploaded for video %s", video_id)
+        except HttpError as exc:
+            logger.warning("Thumbnail upload failed (HTTP %s): %s", exc.resp.status, exc.content)
+
     # ── Helpers ───────────────────────────────────────────────────────────────
 
     def _check_service(self) -> None:
