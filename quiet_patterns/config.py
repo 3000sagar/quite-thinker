@@ -112,7 +112,7 @@ OLLAMA_TEMPERATURE = 0.6
 
 # ─── Scheduler Settings ──────────────────────────────────────────────────────
 TIMEZONE               = ZoneInfo("Asia/Kolkata")
-DEFAULT_POST_HOURS     = [9, 11, 18, 21]  # Analytics-optimized: 9am, 11am, 6pm, 9pm IST
+DEFAULT_POST_HOURS     = [9, 19, 21]  # 9am, 7pm, 9pm IST — prime evening window for mental health content
 UPLOADS_BEFORE_OPTIMIZE = 10         # analyze after this many uploads
 
 # ─── YouTube API ─────────────────────────────────────────────────────────────
