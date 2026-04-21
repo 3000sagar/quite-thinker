@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+"""
+Git pre-commit hook entrypoint.
+Uses the repo scanner directly to avoid shell portability issues on Windows.
+"""
+
+import os
+import subprocess
+import sys
+
+
+def main() -> int:
+    root = os.getcwd()
+    scanner = os.path.join(root, "tools", "secret_scan.py")
+    if not os.path.exists(scanner):
+        print("Warning: secret scanner not found; skipping.")
+        return 0
+    return subprocess.call([sys.executable, scanner, "--staged"])
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

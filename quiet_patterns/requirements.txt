@@ -1,0 +1,20 @@
+# Quiet Patterns – YouTube Shorts Automation
+# Python 3.12+ required
+
+# ── Core video processing ──────────────────────────────────────────────────
+moviepy==1.0.3
+numpy>=1.26.0
+Pillow>=10.0.0
+openpyxl>=3.1.5
+
+# ── YouTube / Google API ───────────────────────────────────────────────────
+google-api-python-client>=2.120.0
+google-auth>=2.28.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+
+# ── Scheduling ─────────────────────────────────────────────────────────────
+APScheduler>=3.10.4
+
+# ── Optional: faster video encoding helper ────────────────────────────────
+# imageio[ffmpeg] is pulled in by moviepy; no explicit pin needed

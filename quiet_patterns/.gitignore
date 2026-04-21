@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+
+# Local runtime artifacts
+*.log
+*.db
+output/
+assets/music/
+
+# Secrets and auth
+client_secrets.json
+tokens/
+*.pem
+*.key
+*.p12
+
+# Editor/system
+.DS_Store
+Thumbs.db
+
+# Temporary/backup files
+_tmp_*.py
+*_backup_*.xlsx
+debug_out.txt
+[0-9]*.[0-9]*.[0-9]*
+*TEMP_MPY_wvf_snd.mp3
+_apply_small.py)
+_apply_small_fix.py)
