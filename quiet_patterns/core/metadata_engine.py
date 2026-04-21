@@ -41,12 +41,11 @@ _TITLE_TEMPLATES = [
 ]
 
 _DESCRIPTION_TEMPLATES = [
-    "Follow for more gentle therapist guidance on {topic}.",
-    "If this resonated, save it and share with someone who needs it.",
-    "A calm breakdown of {topic} in everyday language.",
-    "Quiet, practical insight for people dealing with {topic}.",
-    "Supportive perspective on {topic} without judgment.",
-    "Follow for daily therapist-style insights on emotional patterns.",
+    "You feel it — but can't always name it. This is for people who carry emotions quietly and are starting to understand why.\n\nFollow for daily insights on the patterns that shape how you think, feel, and connect.\n\n#overthinking #emotionalawareness #innerwork #nervoussystem #selfawareness #mentalhealth #therapistadvice",
+    "If this resonated with you, you're not alone. Many people feel deeply but express quietly — that's not weakness, it's a different way of being in the world.\n\nSave this and come back for more gentle perspectives on emotional patterns and nervous system regulation.\n\n#highlysensitive #quietmind #emotionalhealing #overthinkers #anxiety #selfgrowth #mentalwellness",
+    "The goal isn't to stop feeling. It's to understand what you're feeling and why.\n\nThis space explores the quiet patterns — the overthinking loops, the emotional responses, the inner rules nobody taught you to question.\n\nFollow for daily therapist-style insights on emotional patterns and inner work.\n\n#nervoussystem #attachment #innerchild #emotionalregulation #selfawareness #mentalhealthtips",
+    "You were probably told to just 'get over it.' But what if the feeling made perfect sense once you understood the pattern?\n\nThis is a quiet space for overthinkers, highly sensitive people, and anyone working to understand their emotional world.\n\nFollow for more gentle guidance on feeling, thinking, and growing.\n\n#therapistadvice #overthinking #emotionalhealing #highlysensitiveperson #selfawareness #mentalwellness",
+    "Some insights are quiet — they don't shout, they just land.\n\nIf you're working on understanding your emotional patterns, navigating anxiety, or simply trying to be more aware — this is for you.\n\nFollow for daily perspectives on the inner work.\n\n#innerwork #quietthinking #emotionalpatterns #nervoussystem #selfregulation #mentalhealth #psychology",
 ]
 
 _TOPIC_FILLERS = [
@@ -109,9 +108,7 @@ class MetadataEngine:
         return "therapist advice for what you feel quietly"[:self.MAX_TITLE_LENGTH]
 
     def _build_description(self, script: Script) -> str:
-        topic = random.choice(_TOPIC_FILLERS)
-        tpl   = random.choice(_DESCRIPTION_TEMPLATES)
-        return tpl.format(topic=topic).strip()
+        return random.choice(_DESCRIPTION_TEMPLATES)
 
     def _build_tags(self) -> list[str]:
         dynamic = random.sample(_DYNAMIC_TAG_POOL, 3)
