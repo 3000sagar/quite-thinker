@@ -58,16 +58,17 @@ _TOPIC_FILLERS = [
 ]
 
 _DYNAMIC_TAG_POOL = [
-    "#therapistadvice", "#mentalwellness", "#emotionalhealing",
-    "#overthinkers", "#anxietysupport", "#selfawareness",
-    "#innerwork", "#nervoussystem", "#quietmind",
-    "#attachmentpatterns", "#traumainformed", "#mindfulness",
-    "#boundaries", "#selfregulation", "#emotionalgrowth",
-    "#introvertlife", "#highlysensitiveperson", "#healingjourney",
-    "#humanbehavior", "#quietpatterns",
+    # Mid-size tags where you can actually surface
+    "#overthinkingquotes", "#anxietytips", "#quietmind",
+    "#emotionalhealingjourney", "#innerchildhealing",
+    "#attachmentstyle", "#nervoussystemhealing",
+    "#overthinkerssupport", "#emotionalawareness",
+    "#healingfromtrauma", "#codependenciesupport",
+    "#selfregulation", "#mindfultips",
+    "#gentleparenting", "#anxietycoach",
 ]
 
-_FIXED_TAGS = ["#shorts", "#therapistadvice", "#mentalhealth"]
+_FIXED_TAGS = ["#shorts", "#emotionalawareness"]
 
 
 @dataclass
